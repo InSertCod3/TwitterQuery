@@ -12,6 +12,8 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Iconicframework CDN --->
     <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+    <!-- JQuery CDN --->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <!-- Our CSS for this template -->
     <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
 
@@ -37,7 +39,7 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="masthead mb-auto">
             <div class="inner">
-                <h3 class="masthead-brand">Searching "Hello World"</h3>
+                <h3 class="masthead-brand">Searching <h3 id="search_query_text" style="font-style: italic;">""</h3></h3>
             </div>
         </header>
 
@@ -78,8 +80,23 @@
             </div>
         </footer>
     </div>
+    <script>
+        function PopulateQueryText(){
+          /* Populates the Search Box with the User Query */
+          var url = new URL(window.location.href);
+          var search_params = new URLSearchParams(url.search);
+          if(search_params.has("query")){
+            $("#search_query_text").text('"' + search_params.get("query") + '"');
+          }
+        }
 
-
+        // Populate the Text Query Box for the Current User Query (After Document is Ready)
+        $(function() {
+          PopulateQueryText()
+        });
+      
+        </script>
 </body>
+
 
 </html>
