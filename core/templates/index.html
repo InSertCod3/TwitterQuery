@@ -15,9 +15,72 @@
     <!-- Our CSS for this template -->
     <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
 
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
 </head>
 
 <body class="text-center" data-gr-c-s-loaded="true">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">Twitter Search</h3>
+                 <!-- Tabs Nav -->
+                 <!--
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link active" href="#">Home</a>
+                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="#">Contact</a>
+                </nav>
+                -->
+            </div>
+        </header>
+
+        <main role="main" class="inner cover">
+            <h1 style="margin-bottom: 1%" class="cover-heading">Query A Search Here...</h1>
+            <form class="form-inline mt-2 mt-md-0 d-flex justify-content-center">
+                <div class="input-group input-group-lg mb-3">
+                        <input type="text" class="form-control inputGroup-sizing-lg" placeholder="....." aria-label="....." aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </div>
+                        </div>
+                
+            </form>
+        </main>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <div class="contactus" style="margin-top: 3%;">
+                    <div class="container">
+                      <h3 class="section-heading">Want To Contact Me?</h3>
+                      <p class="section-description">If you have any question or concern feel free to contact us.
+                        </p><p> Email: insertcod3@gmail.com </p> 
+                      <p></p>
+                      <p>Made with <i style="color: red" class="icon ion-md-heart"></i> in New York • Developed with
+                        <a href="https://www.palletsprojects.com/p/flask/" target="_blank">Flask</a>,
+                        <a href="https://developer.twitter.com/en/docs.html" target="_blank">Twitter API</a>,
+                        <a href="https://getbootstrap.com" target="_blank"> Bootstrap</a>, and
+                        <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a>
+                      </p>
+                    </div>
+                  </div>
+            </div>
+        </footer>
+    </div>
 
 
 </body>
