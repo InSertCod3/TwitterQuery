@@ -12,3 +12,9 @@ BP_MAIN = Blueprint('main', __name__)
 def index():
     """Serve client-side application."""
     return render_template('index.html')
+
+@BP_MAIN.route('/search')
+def search():
+    """Serve client-side /search."""
+    return render_template('search.html')
+
