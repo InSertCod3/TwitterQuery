@@ -9,3 +9,6 @@ set TWITTER_ACCESS_TOKEN_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 python manage.py runserver
 pause
 ```
+
+### Api Mappings
+:::/api/tweet/search?q=Dev%20World
