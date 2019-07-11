@@ -27,8 +27,8 @@ def twitter_search():
     """ Base Class to Show all Users """
     _schema = {"q": None}
     _bind = {**_schema, **request.args}
-    _kc = key_missing_checker(_bind, ["q"])
+    _kc = key_missing_checker(_bind, ["query"])
     if _kc["status"] == "error":
         return jsonify(_kc)
-    _kc["data"] = api.GetSearch(raw_query="q={0}&result_type=recent&count=100".format(_bind['q']), return_json=True)
+    _kc["data"] = api.GetSearch(raw_query="q={0}&result_type=recent&count=100".format(_bind['query']), return_json=True)
     return jsonify(_kc)

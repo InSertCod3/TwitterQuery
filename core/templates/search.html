@@ -55,7 +55,7 @@
       var url = new URL(window.location.href);
       var search_params = new URLSearchParams(url.search);
       if(search_params.has("query")){
-        fetch('/api/tweet/search?q=' + search_params.get("query"))
+        fetch('/api/tweet/search?query=' + search_params.get("query"))
           .then(function (response) {
             return response.json();
           })
