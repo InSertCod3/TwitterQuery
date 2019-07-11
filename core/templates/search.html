@@ -41,7 +41,14 @@
     
     // Tweets Data
     const tweets = []
+    // Color options
+    const ColorOptions = ["#b587bd", "#c98396", "#dd8585", "#e2a690", "#46bedf"]
 
+    function choose(choices) {
+      /* Chooses a random choice in a Array[] */
+      var index = Math.floor(Math.random() * choices.length);
+      return choices[index];
+    }
 
     function PopulateTweets(){
       /* Populates the Search Box with the User Query */
@@ -59,7 +66,7 @@
                 name: info.user.name,
                 handle: '@' + info.user.screen_name,
                 image: info.user.profile_image_url_https,
-                color: "#b587bd",
+                color: choose(ColorOptions),
                 tweet: info.text
               }
               tweets.push(vItem)
