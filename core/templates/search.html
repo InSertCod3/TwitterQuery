@@ -18,7 +18,29 @@
 
 <body>
   <div id="app">
-    <div>
+      <v-toolbar dense fixed dark color="primary">
+    
+        <v-toolbar-title class="white--text">
+          <div>
+            <v-chip color="primary" text-color="white">Primary</v-chip>
+            <v-chip color="red" text-color="white">Colored Chip</v-chip>
+            <v-chip color="green" text-color="white">Colored Chip</v-chip>
+          </div>
+        </v-toolbar-title>
+    
+        <v-spacer></v-spacer>
+    
+        <v-btn icon>
+          <v-icon>refresh</v-icon>
+        </v-btn>
+    
+        <v-btn icon>
+          <v-icon>home</v-icon>
+        </v-btn>
+    
+      </v-toolbar>
+
+    <div id="tweet-container">
       <tweet-component v-for="tweet in tweets" :tweet="tweet" v-bind:key="tweet.id" style="margin: 10px;" />
     </div>
     
@@ -172,9 +194,7 @@
             this.tweets.length = 0;
             currentPage++;
             var dataPage_keys = Object.keys(dataPages);
-            console.log(dataPage_keys[dataPage_keys.length - 1], currentPage)
             if (dataPage_keys[dataPage_keys.length - 1] > currentPage){
-              console.log(645)
               PopulateTweets(dataPages[currentPage])
             } else {
               this.doQuery(nextTwitterPage);
@@ -186,7 +206,6 @@
               currentPage--;
             }
             var dataPage_keys = Object.keys(dataPages);
-            console.log(dataPage_keys[dataPage_keys.length - 1], currentPage)
             PopulateTweets(dataPages[currentPage])
           }
       }
