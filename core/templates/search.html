@@ -64,8 +64,8 @@
       /* Populates the Search Box with the User Query */
       var url = new URL(window.location.href);
       var search_params = new URLSearchParams(url.search);
-      if(search_params.has("query")){
-        fetch('/api/tweet/search?query=' + search_params.get("query") + "&count=25")
+      if(search_params.has("q")){
+        fetch('/api/tweet/search?q=' + search_params.get("q") + "&count=25")
           .then(function (response) {
             return response.json();
           })
