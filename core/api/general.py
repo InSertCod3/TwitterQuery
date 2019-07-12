@@ -25,7 +25,7 @@ def key_missing_checker(data, keys):
 @BP_API.route('/tweet/search', methods=['GET'])
 def twitter_search():
     """ Base Class to Show all Users """
-    _schema = {"q": None, "count": 50}
+    _schema = {"q": None, "count": 50, "max_id": None, "include_entities": None}
     _bind = {**_schema, **request.args}
     _kc = key_missing_checker(_bind, ["query"])
     if _kc["status"] == "error":
@@ -33,5 +33,7 @@ def twitter_search():
     _kc["data"] = api.GetSearch(term=_bind['query'],
                                 count=_bind['count'],
                                 result_type="recent",
+                                max_id=_bind['max_id'],
+                                include_entities=_bind['include_entities'],
                                 return_json=True)
     return jsonify(_kc)
