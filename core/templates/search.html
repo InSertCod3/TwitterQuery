@@ -22,14 +22,12 @@
       <tweet-component v-for="tweet in tweets" :tweet="tweet" v-bind:key="tweet.id" style="margin: 10px;" />
     </div>
     <v-btn
-      color="#757575" 
-      :disabled="" 
+      color="#757575"
       @click="prevPage">
       Previous
     </v-btn>
     <v-btn
       color="#00ffff"
-      :disabled="" 
       @click="nextPage">
       Next
     </v-btn>
@@ -67,7 +65,7 @@
       var url = new URL(window.location.href);
       var search_params = new URLSearchParams(url.search);
       if(search_params.has("query")){
-        fetch('/api/tweet/search?query=' + search_params.get("query"))
+        fetch('/api/tweet/search?query=' + search_params.get("query") + "&count=25")
           .then(function (response) {
             return response.json();
           })
