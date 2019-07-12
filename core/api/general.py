@@ -30,5 +30,8 @@ def twitter_search():
     _kc = key_missing_checker(_bind, ["query"])
     if _kc["status"] == "error":
         return jsonify(_kc)
-    _kc["data"] = api.GetSearch(raw_query="q={0}&result_type=recent&count={1}".format(_bind['query'], _bind['count']), return_json=True)
+    _kc["data"] = api.GetSearch(term=_bind['query'],
+                                count=_bind['count'],
+                                result_type="recent",
+                                return_json=True)
     return jsonify(_kc)
