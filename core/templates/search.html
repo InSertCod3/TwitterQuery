@@ -21,16 +21,30 @@
     <div>
       <tweet-component v-for="tweet in tweets" :tweet="tweet" v-bind:key="tweet.id" style="margin: 10px;" />
     </div>
-    <v-btn
-      color="#757575"
-      @click="prevPage">
-      Previous
-    </v-btn>
-    <v-btn
-      color="#00ffff"
-      @click="nextPage">
-      Next
-    </v-btn>
+    
+    <v-layout row justify-center>
+      <v-flex xs1>
+        <v-btn
+          color="#757575"
+          @click="prevPage">
+          Previous
+        </v-btn>
+      </v-flex>
+      <v-flex xs1>
+        <!--
+        <v-card dark color="secondary">
+          <v-card-text>PAGENUMBER</v-card-text>
+        </v-card>
+        -->
+      </v-flex>
+        <v-flex xs1>
+          <v-btn
+          color="#00ffff"
+          @click="nextPage">
+          Next
+        </v-btn>
+      </v-flex>
+    </v-layout>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -50,9 +64,13 @@
     */
     
     // Tweets Data
-    const tweets = []
+    var tweets = [];
+    var dataPages = {};
+    var nextTwitterPage = "";
+    var currentPage = 0; 
+
     // Color options
-    const ColorOptions = ["#b587bd", "#c98396", "#dd8585", "#e2a690", "#46bedf"]
+    const ColorOptions = ["#b587bd", "#c98396", "#dd8585", "#e2a690", "#46bedf"];
 
     function choose(choices) {
       /* Chooses a random choice in a Array[] */
@@ -60,29 +78,40 @@
       return choices[index];
     }
 
-    function PopulateTweets(){
+    function PopulateData(){
       /* Populates the Search Box with the User Query */
       var url = new URL(window.location.href);
       var search_params = new URLSearchParams(url.search);
       if(search_params.has("q")){
-        fetch('/api/tweet/search?q=' + search_params.get("q") + "&count=25")
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (myJson) {
-            for (content in myJson.data.statuses) {
-              info = myJson.data.statuses[content]
-              vItem = {
-                name: info.user.name,
-                handle: '@' + info.user.screen_name,
-                image: info.user.profile_image_url_https,
-                color: choose(ColorOptions),
-                tweet: info.text
-              }
-              tweets.push(vItem)
-            }
-        });
+        doQuery('/api/tweet/search?q=' + search_params.get("q") + "&count=25");
       }
+    }
+
+    function PopulateTweets(data){
+      for (content in data) {
+        info = data[content];
+        vItem = {
+          name: info.user.name,
+          handle: '@' + info.user.screen_name,
+          image: info.user.profile_image_url_https,
+          color: choose(ColorOptions),
+          tweet: info.text
+        }
+        tweets.push(vItem);
+      }
+    }
+
+    function doQuery(url){
+      fetch(url)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (myJson) {
+          // .push() the page to array store
+          nextTwitterPage = "/api/tweet/search" + myJson.data.search_metadata.next_results;
+          dataPages[currentPage] = myJson.data.statuses;
+          PopulateTweets(myJson.data.statuses);
+      });
     }
 
     /* Tweet Holder */
@@ -126,14 +155,40 @@
 
     // Populate the Tweets Data
     $(function() {
-      PopulateTweets()
+      PopulateData();
     });
 
     /* Vue App */
     new Vue({
       el: '#app',
       data: {
-        tweets
+        tweets,
+        dataPages,
+        currentPage
+      },
+      methods:{
+          doQuery: doQuery,
+          nextPage(){
+            this.tweets.length = 0;
+            currentPage++;
+            var dataPage_keys = Object.keys(dataPages);
+            console.log(dataPage_keys[dataPage_keys.length - 1], currentPage)
+            if (dataPage_keys[dataPage_keys.length - 1] > currentPage){
+              console.log(645)
+              PopulateTweets(dataPages[currentPage])
+            } else {
+              this.doQuery(nextTwitterPage);
+            }
+          },
+          prevPage(){
+            this.tweets.length = 0;
+            if (currentPage > 0){
+              currentPage--;
+            }
+            var dataPage_keys = Object.keys(dataPages);
+            console.log(dataPage_keys[dataPage_keys.length - 1], currentPage)
+            PopulateTweets(dataPages[currentPage])
+          }
       }
     })
   </script>

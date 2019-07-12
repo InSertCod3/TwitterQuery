@@ -30,7 +30,7 @@ def twitter_search():
     Returns:
         jsonify -- jsonify(...)
     """
-    _schema = {"q": None, "count": 50, "max_id": None, "include_entities": None}
+    _schema = {"q": None, "count": 50, "max_id": None, "include_entities": None, "since_id": None}
     _bind = {**_schema, **request.args}
     _kc = key_missing_checker(_bind, ["q"])
     if _kc["status"] == "error":
@@ -40,5 +40,6 @@ def twitter_search():
                                 result_type="recent",
                                 max_id=_bind['max_id'],
                                 include_entities=_bind['include_entities'],
+                                since_id=_bind['since_id'],
                                 return_json=True)
     return jsonify(_kc)
