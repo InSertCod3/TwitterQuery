@@ -21,6 +21,18 @@
     <div>
       <tweet-component v-for="tweet in tweets" :tweet="tweet" v-bind:key="tweet.id" style="margin: 10px;" />
     </div>
+    <v-btn
+      color="#757575" 
+      :disabled="" 
+      @click="prevPage">
+      Previous
+    </v-btn>
+    <v-btn
+      color="#00ffff"
+      :disabled="" 
+      @click="nextPage">
+      Next
+    </v-btn>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
