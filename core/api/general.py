@@ -16,6 +16,18 @@ api = twitter.Api(consumer_key=Config.TWITTER_CONSUMER_KEY,
                   access_token_secret=Config.TWITTER_ACCESS_TOKEN_SECRET)
 
 def wordFreqCounter(statements):
+    """
+    Process a list of statements and output there most frequent words.
+    x = ["this is a basic sentence", "another great and amazing sentence"]
+    >>> wordFreqCounter(x)
+    # {"sentence": 2, "this": 1, "basic": 1, .....}
+    
+    Arguments:
+        statements {list} -- List of statements
+    
+    Returns:
+        dict -- Count of occurrences
+    """
     words = []
     for x in statements:
         x_cleaned = re.sub(r'[^\w]', ' ', x)  # remove symbols
