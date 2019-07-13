@@ -22,9 +22,7 @@
     
         <v-toolbar-title class="white--text">
           <div>
-            <v-chip color="primary" text-color="white">Primary</v-chip>
-            <v-chip color="red" text-color="white">Colored Chip</v-chip>
-            <v-chip color="green" text-color="white">Colored Chip</v-chip>
+            <word-freq-component v-for="word in wordfreq" :word="word" v-bind:key="word.id"/>
           </div>
         </v-toolbar-title>
     
@@ -87,6 +85,7 @@
     
     // Tweets Data
     var tweets = [];
+    var wordfreq = [];
     var dataPages = {};
     var nextTwitterPage = "";
     var currentPage = 0; 
@@ -100,18 +99,17 @@
       return choices[index];
     }
 
-    function PopulateData(){
-      /* Populates the Search Box with the User Query */
-      var url = new URL(window.location.href);
-      var search_params = new URLSearchParams(url.search);
-      if(search_params.has("q")){
-        doQuery('/api/tweet/search?q=' + search_params.get("q") + "&count=25");
-      }
+    function populateWordFreq(data){
+      count = 0
+      Object.keys(data).forEach(function(key) {
+          wordfreq.push({id: count, key: key, value: data[key], color: choose(ColorOptions)});
+          count++;
+      });
     }
 
     function PopulateTweets(data){
-      for (content in data) {
-        info = data[content];
+      for (content in data.statuses) {
+        info = data.statuses[content];
         vItem = {
           name: info.user.name,
           handle: '@' + info.user.screen_name,
@@ -123,6 +121,11 @@
       }
     }
 
+    function Populate(data){
+      populateWordFreq(data.wordfrequency);
+      PopulateTweets(data);
+    }
+
     function doQuery(url){
       fetch(url)
         .then(function (response) {
@@ -132,9 +135,24 @@
           // .push() the page to array store
           nextTwitterPage = "/api/tweet/search" + myJson.data.search_metadata.next_results;
           dataPages[currentPage] = myJson.data.statuses;
-          PopulateTweets(myJson.data.statuses);
+          Populate(myJson.data);
       });
     }
+
+    function ApiQuery(){
+      /* Populates the Search Box with the User Query */
+      var url = new URL(window.location.href);
+      var search_params = new URLSearchParams(url.search);
+      if(search_params.has("q")){
+        doQuery('/api/tweet/search?q=' + search_params.get("q") + "&count=25");
+      }
+    }
+
+    Vue.component('word-freq-component',
+      {template: `<v-chip small :color="word.color" text-color="white">
+        <v-avatar :color="word.color" class="darken-4">{% raw %}{{word.value}}{% endraw %}</v-avatar>{% raw %}{{word.key}}{% endraw %}</v-chip>`, props: {
+        word: Object
+    }})
 
     /* Tweet Holder */
     Vue.component('tweet-component', {
@@ -177,7 +195,7 @@
 
     // Populate the Tweets Data
     $(function() {
-      PopulateData();
+      ApiQuery();
     });
 
     /* Vue App */
@@ -186,12 +204,14 @@
       data: {
         tweets,
         dataPages,
-        currentPage
+        currentPage,
+        wordfreq
       },
       methods:{
           doQuery: doQuery,
           nextPage(){
             this.tweets.length = 0;
+            this.wordfreq.length = 0;
             currentPage++;
             var dataPage_keys = Object.keys(dataPages);
             if (dataPage_keys[dataPage_keys.length - 1] > currentPage){
@@ -202,6 +222,7 @@
           },
           prevPage(){
             this.tweets.length = 0;
+            this.wordfreq.length = 0;
             if (currentPage > 0){
               currentPage--;
             }
