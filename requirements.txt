@@ -3,3 +3,4 @@ requests
 fire
 gunicorn
 python-twitter
+better_profanity

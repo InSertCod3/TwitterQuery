@@ -1,7 +1,10 @@
 import os
+import re
 import sys
 from flask import Blueprint, request, abort, jsonify, g
+from collections import Counter
 import twitter
+from better_profanity import profanity
 
 # Relative Imports
 from . import BP_API
@@ -11,6 +14,18 @@ api = twitter.Api(consumer_key=Config.TWITTER_CONSUMER_KEY,
                   consumer_secret=Config.TWITTER_CONSUMER_SECRET,
                   access_token_key=Config.TWITTER_ACCESS_TOKEN_KEY,
                   access_token_secret=Config.TWITTER_ACCESS_TOKEN_SECRET)
+
+def wordFreqCounter(statements):
+    words = []
+    for x in statements:
+        x_cleaned = re.sub(r'[^\w]', ' ', x)  # remove symbols
+        for y in x_cleaned.split():
+            if len(y) <= 3:
+                continue
+            if profanity.contains_profanity(y) is True:
+                continue
+            words.append(y)
+    return dict(Counter(words).most_common(12))
 
 def key_missing_checker(data, keys):
     _schema = {"status": "ok", "message": "ok", "data": None}
@@ -35,11 +50,13 @@ def twitter_search():
     _kc = key_missing_checker(_bind, ["q"])
     if _kc["status"] == "error":
         return jsonify(_kc)
-    _kc["data"] = api.GetSearch(term=_bind['q'],
-                                count=_bind['count'],
-                                result_type="recent",
-                                max_id=_bind['max_id'],
-                                include_entities=_bind['include_entities'],
-                                since_id=_bind['since_id'],
-                                return_json=True)
+    twitter_query = api.GetSearch(term=_bind['q'],
+                                  count=_bind['count'],
+                                  result_type="recent",
+                                  max_id=_bind['max_id'],
+                                  include_entities=_bind['include_entities'],
+                                  since_id=_bind['since_id'],
+                                  return_json=True)
+    _kc["data"] = twitter_query
+    _kc["data"]["wordfrequency"] = wordFreqCounter([_tw["text"] for _tw in twitter_query["statuses"]])
     return jsonify(_kc)
