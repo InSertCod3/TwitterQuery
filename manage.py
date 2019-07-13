@@ -10,7 +10,7 @@ class Tool(object):
 
     def runserver(self):
         """Runs the App Using Config"""
-        return app()
+        return app.run(host="0.0.0.0", port=5000, threaded=True)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ from flask import Flask
 from .config import config
 
 
-def app(config_name="development"):
+def main_app(config_name="development"):
     """[summary]
     
     Keyword Arguments:
@@ -29,4 +29,6 @@ def app(config_name="development"):
     from .api import BP_API as api_blueprint
     flask_app.register_blueprint(api_blueprint, url_prefix='/api')
 
-    return flask_app.run(host="0.0.0.0", port=5000, threaded=True)
+    return flask_app
+
+app = main_app()
