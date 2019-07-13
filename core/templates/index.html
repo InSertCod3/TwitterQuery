@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <!-- Our CSS for this template -->
     <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
+    <!-- Our Font for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
     <style>
         .bd-placeholder-img {
@@ -39,7 +41,9 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="masthead mb-auto">
             <div class="inner">
-                <h3 class="masthead-brand">Twitter Search</h3>
+                <!-- 
+                <h3 class="masthead-brand">Twitter Query</h3>
+                -->
                  <!-- Tabs Nav -->
                  <!--
                 <nav class="nav nav-masthead justify-content-center">
@@ -52,10 +56,10 @@
         </header>
 
         <main role="main" class="inner cover">
-            <h1 style="margin-bottom: 1%" class="cover-heading">Query A Search Here...</h1>
+            <h1 id="search_bar_tilte" style="margin-bottom: 3%; font-size: 60px; position: relative;" class="cover-heading"><strong>Twitter Search</strong></h1>
             <form class="form-inline mt-2 mt-md-0 d-flex justify-content-center" action="/search" method="get">
                 <div class="input-group input-group-lg mb-3">
-                        <input type="text" class="form-control inputGroup-sizing-lg" name="q" id="search_query" placeholder="....." aria-label="....." aria-describedby="basic-addon2">
+                        <input type="text" class="form-control inputGroup-sizing-lg" name="q" id="search_query" placeholder="search here..." aria-label="search here..." aria-describedby="basic-addon2">
                         <div class="input-group-append">
                                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </div>
