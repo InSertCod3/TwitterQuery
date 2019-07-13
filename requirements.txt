@@ -1,3 +1,5 @@
 Flask
 requests
 fire
+gunicorn
+python-twitter
