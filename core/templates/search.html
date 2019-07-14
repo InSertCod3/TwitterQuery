@@ -28,7 +28,7 @@
     
         <v-spacer></v-spacer>
     
-        <v-btn icon>
+        <v-btn icon @click="reloadPage">
           <v-icon>refresh</v-icon>
         </v-btn>
     
@@ -228,6 +228,9 @@
             }
             var dataPage_keys = Object.keys(dataPages);
             PopulateTweets(dataPages[currentPage])
+          },
+          reloadPage(){
+            window.location.reload()
           }
       }
     })
