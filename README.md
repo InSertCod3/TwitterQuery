@@ -1,4 +1,4 @@
-# TwitterQuery
+# TwitterQuery ~ [![Python3-shield]](https://www.python.org/) [![version-shield]]() [![license-shield]]() 
  Query Twitter Api (Frontend/Backend)
 
 ### Local Machine Testing
@@ -41,3 +41,8 @@ resources:
   memory_gb: 0.5
   disk_size_gb: 10
 ```
+
+
+[version-shield]: https://img.shields.io/badge/version---dev-yellowgreen.svg "dev"
+[Python3-shield]: https://img.shields.io/badge/Python3%2B-3.6-blue.svg "Python3+"
+[license-shield]: https://img.shields.io/badge/license-Apache%202.0-lightgrey.svg "License"
