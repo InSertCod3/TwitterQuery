@@ -11,11 +11,49 @@ python manage.py runserver
 pause
 ```
 
-### Api Mappings
-:::/api/tweet/search?q=Dev%20World
+# Api Mappings
+
+### GET /api/tweet/search
+#### Example: Search – GET http://localhost:5000/api/tweet/search?q=Dev%20World&count=25
+``` json
+{
+  "data": {
+    "search_metadata": {
+      "completed_in": 0.025, 
+      "count": 1, 
+      "max_id": 1150481719922851840, 
+      "max_id_str": "1150481719922851840", 
+      "next_results": "?max_id=1150481719922851839&q=Dev%20World&count=1&include_entities=1&result_type=recent", 
+      "query": "Dev+World", 
+      "refresh_url": "?since_id=1150481719922851840&q=Dev%20World&result_type=recent&include_entities=1", 
+      "since_id": 0, 
+      "since_id_str": "0"
+    }, 
+    "statuses": [....]
+    "wordfrequency": {
+      "1975": 1, 
+      "1979": 1, 
+      "1983": 1, 
+      "Allan": 1, 
+      "Border": 1, 
+      "Captains": 1, 
+      "Clive": 1, 
+      "Cups": 1, 
+      "Kapil": 1, 
+      "Lloyd": 1, 
+      "SeerviBharath": 1, 
+      "World": 1
+    }
+  }, 
+  "message": "ok", 
+  "status": "ok"
+}
+```
 
 
-### Example Google Cloud Deployment
+# Example Google Cloud Deployment
+
+#### Example: Yaml configuration
 ``` yaml
 runtime: python
 env: flex
