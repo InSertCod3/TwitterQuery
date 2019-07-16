@@ -23,8 +23,8 @@ class Config(object):
         TWITTER_CONSUMER_SECRET = os.environ["TWITTER_CONSUMER_SECRET"]
         TWITTER_ACCESS_TOKEN_KEY = os.environ["TWITTER_ACCESS_TOKEN_KEY"]
         TWITTER_ACCESS_TOKEN_SECRET = os.environ["TWITTER_ACCESS_TOKEN_SECRET"]
-    except KeyError as TWEET_ENV_VAR_ERROR: 
-        print("Please set the environment variable(s): ", TWEET_ENV_VAR_ERROR)
+    except KeyError as APPLICATION_ENV_VAR_ERROR: 
+        print("Please set the environment variable(s): ", APPLICATION_ENV_VAR_ERROR)
         sys.exit(1)
 
 
