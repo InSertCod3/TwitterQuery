@@ -52,7 +52,11 @@ pause
 }
 ```
 
+#### Screenshots
 
+<img width="640 " height="360"
+    src="https://raw.githubusercontent.com/InSertCod3/TwitterQuery/master/screenshots/2.PNG">
+  
 # Example Google Cloud Deployment
 
 #### Example: Yaml configuration
