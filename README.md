@@ -2,6 +2,7 @@
  Query Twitter Api (Frontend/Backend)
 
 ### Local Machine Testing
+#### Create ./boot_server.bat
 ``` bash
 set FLASK_CONFIG=development
 set SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -60,6 +61,7 @@ pause
 # Example Google Cloud Deployment
 
 #### Example: Yaml configuration
+#### Create ./app.yaml
 ``` yaml
 runtime: python
 env: flex
