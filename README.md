@@ -61,7 +61,8 @@ pause
 # Example Google Cloud Deployment
 
 #### Example: Yaml configuration
-#### Create ./app.yaml
+#### 1. --> Create: ./app.yaml
+#### 2. --> Configure: Apply Contents below (Fill in the "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" with there respective values)
 ``` yaml
 runtime: python
 env: flex
@@ -89,7 +90,10 @@ resources:
   memory_gb: 0.5
   disk_size_gb: 10
 ```
-
+#### 3. --> Deploy: Run the App on Google Cloud App Engine
+```bash
+>>> gcloud app deploy
+```
 
 [version-shield]: https://img.shields.io/badge/version---dev-yellowgreen.svg "dev"
 [Python3-shield]: https://img.shields.io/badge/Python3%2B-3.6-blue.svg "Python3+"
