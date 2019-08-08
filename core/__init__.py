@@ -16,10 +16,9 @@ def main_app(config_name="development"):
         [type] -- [description]
     """
 
-    if config_name is None:
-        config_name = os.environ.get('FLASK_CONFIG', 'development')
+    config_name_id = os.environ.get('FLASK_CONFIG', 'development')
     flask_app = Flask(__name__)
-    flask_app.config.from_object(config[config_name])
+    flask_app.config.from_object(config[config_name_id])
 
     # Register web application routes
     from .main import BP_MAIN as main_blueprint
