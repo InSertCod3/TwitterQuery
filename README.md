@@ -58,7 +58,7 @@ pause
 <img width="640 " height="360"
     src="https://raw.githubusercontent.com/InSertCod3/TwitterQuery/master/screenshots/2.PNG">
   
-# Example Google Cloud Deployment
+# Example Google Cloud (APPENGINE) Deployment
 
 #### Example: Yaml configuration
 #### 1. --> Create: ./app.yaml
@@ -93,6 +93,55 @@ resources:
 #### 3. --> Deploy: Run the App on Google Cloud App Engine
 ```bash
 >>> gcloud app deploy
+```
+
+# Example Google Cloud (Cloud Run) Deployment
+#### 1. Create ./Dockerfile
+```DockerFile
+# Use the official Python image.
+# https://hub.docker.com/_/python
+FROM python:3.7
+
+# Copy local code to the container image.
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+COPY . .
+
+# Install production dependencies.
+RUN pip install Flask gunicorn Flask requests fire python-twitter better_profanity
+
+# Run the web service on container startup. Here we use the gunicorn
+# webserver, with one worker process and 8 threads.
+# For environments with multiple CPU cores, increase the number of workers
+# to be equal to the cores available.
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 2 manage:app
+```
+
+#### 2. Configure & Deploy 
+```bash
+foo@bar:~$ gcloud config get-value project
+{PROJECT_ID}
+foo@bar:~$ gcloud builds submit --tag gcr.io/{PROJECT_ID}/twitterquery
+............................
+.....Build Container........
+............................
+foo@bar:~$ gcloud beta run deploy --image gcr.io/unique-aloe-217423/twitterquery --platform managed --update-env-vars 
+              TWITTER_CONSUMER_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX,TWITTER_CONSUMER_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX,
+              TWITTER_ACCESS_TOKEN_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX,TWITTER_ACCESS_TOKEN_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Service name (twitterquery):  twitterquery
+Allow unauthenticated invocations to [twitterquery] (y/N)?  y
+Deploying container..........
+Service [twitterquery] revision [twitterquery-00001] has been deployed and is serving traffic at https://twitterquery.XXXXXXX..........
+foo@bar:~$
+```
+## 3. Useful Conmands
+#### Avoid unnecessary memory allocation
+```bash
+foo@bar:~$ gcloud beta run services update [SERVICE_NAME] --memory 128
+```
+#### Change Envoriment Variables
+```bash
+foo@bar:~$ gcloud beta run services update [SERVICE_NAME] --update-env-vars KEY1=VALUE1,KEY2=VALUE2
 ```
 
 [version-shield]: https://img.shields.io/badge/version---dev-yellowgreen.svg "dev"
