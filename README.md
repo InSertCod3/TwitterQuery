@@ -125,7 +125,8 @@ foo@bar:~$ gcloud builds submit --tag gcr.io/{PROJECT_ID}/twitterquery
 ............................
 .....Build Container........
 ............................
-foo@bar:~$ gcloud beta run deploy --image gcr.io/unique-aloe-217423/twitterquery --platform managed --update-env-vars 
+foo@bar:~$ gcloud beta run deploy --image gcr.io/unique-aloe-217423/twitterquery --platform managed --update-env-vars
+              FLASK_CONFIG=production,SECRET_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
               TWITTER_CONSUMER_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX,TWITTER_CONSUMER_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX,
               TWITTER_ACCESS_TOKEN_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX,TWITTER_ACCESS_TOKEN_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 Service name (twitterquery):  twitterquery
